@@ -1,4 +1,4 @@
-from flet import Page, Row, Image, IconButton, Icon, icons, ListView, Column, CircleAvatar, Text
+from flet import Page, Row, Image, IconButton, Icon, icons, ListView, Column, CircleAvatar, Text, SnackBar
 
 
 def Post(page: Page, pp_url: str, username: str, img_url: str,) -> Column:
@@ -42,6 +42,9 @@ def Post(page: Page, pp_url: str, username: str, img_url: str,) -> Column:
     def save_or_unsave(e):
         if e.control.icon == icons.BOOKMARK_OUTLINE_OUTLINED:
             e.control.icon = icons.BOOKMARK
+            page.snack_bar = SnackBar(Text(value="Gönderi kaydedildi"))
+            page.snack_bar.open = True
+            page.update()
         else:
             e.control.icon = icons.BOOKMARK_OUTLINE_OUTLINED
         e.control.update()

@@ -1,14 +1,30 @@
 import flet
-from flet import Page, Column, Divider, Container, Stack
-import requests
+from flet import Page, Column, Divider, Container, Stack, View
 
-from Components.Navbar import Navbar
-from Components.Stories import Stories
-from Components.Posts import Posts
 from Components.NavigationBar import NavigationBar
 
-random_user_api = "https://randomuser.me/api/?results=10"
-response = requests.get(random_user_api).json()['results']
+from Pages.Homepage import Homepage
+from Pages.Explore import Explore
+from Pages.Reels import Reels
+from Pages.Store import Store
+from Pages.Profile import Profile
+
+
+def get_all_controls(page):
+    try:
+        if not page.controls:
+            return
+        for c in page.controls:
+            print(c)
+            get_all_controls(c)
+    except:
+        try:
+            if not page.content:
+                return
+            print(page)
+            get_all_controls(page.content)
+        except:
+            return
 
 
 def main(page: Page):
@@ -16,33 +32,53 @@ def main(page: Page):
     page.window_width = 450
     page.window_height = 800
 
-    r1 = Navbar(page)
-    stories_container = Stories(page, response)
-    posts = Posts(page, response)
+    homepage = Homepage(page)
+    explore = Explore(page)
+    reels = Reels(page)
+    store = Store(page)
+    profile = Profile(page)
 
-    mainContent = Column(
+    mainStack = View(
+        route="/",
         controls=[
-            r1,
-            stories_container,
-            Divider(thickness=0.2),
-            posts,
+            Container(
+                content=Stack(
+                    controls=[
+                        homepage,
+                        NavigationBar(page),
+                    ]
+                ),
+                width=page.window_width,
+                height=page.window_height
+            )
         ]
     )
 
-    mainStack = Container(
-        content=Stack(
-            controls=[
-                mainContent,
-                NavigationBar(page),
-            ]
-        ),
-        width=page.window_width,
-        height=page.window_height
-    )
+    def route_change(route):
+        view = View()
 
-    page.add(mainStack)
+        if page.route == "/":
+            mainStack.route = "/explore"
+            mainStack.controls[0].content.controls[0] = homepage
+        elif page.route == "/explore":
+            mainStack.route = "/explore"
+            mainStack.controls[0].content.controls[0] = explore
+        elif page.route == "/reels":
+            mainStack.route = "/reels"
+            mainStack.controls[0].content.controls[0] = reels
+        elif page.route == "/store":
+            mainStack.route = "/store"
+            mainStack.controls[0].content.controls[0] = store
+        elif page.route == "/profile":
+            mainStack.route = "/profile"
+            mainStack.controls[0].content.controls[0] = profile
 
-    page.update()
+        page.views.clear()
+        page.views.append(mainStack)
+        page.update()
+
+    page.on_route_change = route_change
+    page.go(page.route)
 
 
 flet.app(target=main, assets_dir="assets", upload_dir="assets/uploads")

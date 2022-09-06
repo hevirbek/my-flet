@@ -7,9 +7,9 @@ def Posts(page: Page, data: dict) -> Column:
     posts = ListView(expand=1, spacing=25)
 
     for user in data:
-        pp_url = user['picture']['medium']
-        img_url = user['picture']['large']
-        username = user['name']['last'].lower()
+        pp_url = user['picture']
+        img_url = user['picture']
+        username = user['username']
 
         new_post = Post(page, pp_url, username, img_url)
 

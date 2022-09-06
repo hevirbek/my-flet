@@ -6,8 +6,8 @@ def Stories(page: Page, data: dict):
                        horizontal=True)
 
     for user in data:
-        img_url = user['picture']['medium']
-        username = user['name']['last'].lower().split()[0]
+        img_url = user['picture']
+        username = user['username']
 
         new_img = CircleAvatar(
             foreground_image_url=img_url,
