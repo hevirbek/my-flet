@@ -1,4 +1,8 @@
-from flet import Page, Column, Text, CircleAvatar, Row, Column, WindowDragArea, Container, padding, ElevatedButton, IconButton, icons, GridView, Image
+from flet import Page, Column, Text, CircleAvatar, Row, Column, WindowDragArea, Container
+from flet import padding, ElevatedButton, IconButton, icons, GridView, Image
+from flet import ButtonStyle
+
+from flet.buttons import RoundedRectangleBorder
 import requests
 
 from Components.Stories import Stories
@@ -89,9 +93,15 @@ def Profile(page: Page):
 
     btns = Row(
         controls=[
-            ElevatedButton(text="Profili Düzenle",
-                           bgcolor="cyan", expand=True),
-            IconButton(icon=icons.ADD, bgcolor="cyan")
+            ElevatedButton(
+                text="Profili Düzenle",
+                bgcolor="white",
+                color="black",
+                style=ButtonStyle(
+                    shape=RoundedRectangleBorder(radius=5),
+                ),
+                expand=True
+            )
         ]
     )
 
