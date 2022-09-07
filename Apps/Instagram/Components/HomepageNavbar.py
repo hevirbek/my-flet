@@ -1,11 +1,11 @@
-from flet import Page, Row, Image, IconButton, Icon, icons, WindowDragArea, FilePicker, FilePickerResultEvent, FilePickerUploadFile, FilePickerUploadEvent
+from flet import Page, Row, Image, IconButton, Icon, icons, FilePicker, FilePickerResultEvent, FilePickerUploadFile, FilePickerUploadEvent
 
 from Components.Post import Post
 
 instagram_top_left_src = "https://seeklogo.com/images/I/instagram-logo-468E0CC266-seeklogo.com.png"
 
 
-def HomepageNavbar(page: Page) -> WindowDragArea:
+def HomepageNavbar(page: Page):
     instagram_top_left = Image(
         src=instagram_top_left_src,
         width=100,
@@ -55,13 +55,13 @@ def HomepageNavbar(page: Page) -> WindowDragArea:
         ],
     )
 
-    r1 = WindowDragArea(Row(
+    r1 = Row(
         controls=[
             instagram_top_left,
             top_right_row
         ],
         alignment="spaceBetween",
         height=50,
-    ))
+    )
 
     return r1

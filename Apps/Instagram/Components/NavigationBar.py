@@ -1,4 +1,4 @@
-from flet import Page, Container, Row, IconButton, icons
+from flet import Page, Container, Row, IconButton, icons, WindowDragArea
 
 
 def NavigationBar(page: Page):
@@ -7,7 +7,7 @@ def NavigationBar(page: Page):
         page.update()
 
     navbar = Container(
-        content=Row(
+        content=WindowDragArea(Row(
             controls=[
                 IconButton(icon=icons.HOME_FILLED,
                            on_click=lambda e: go_route("/")),
@@ -22,6 +22,7 @@ def NavigationBar(page: Page):
             ],
             alignment="spaceAround",
             vertical_alignment="center",
+        )
         ),
         width=page.width,
         height=60,

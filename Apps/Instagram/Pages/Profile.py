@@ -1,4 +1,4 @@
-from flet import Page, Column, Text, CircleAvatar, Row, Column, WindowDragArea, Container
+from flet import Page, Column, Text, CircleAvatar, Row, Column, Container
 from flet import padding, ElevatedButton, IconButton, icons, GridView, Image
 from flet import ButtonStyle
 
@@ -6,6 +6,7 @@ from flet.buttons import RoundedRectangleBorder
 import requests
 
 from Components.Stories import Stories
+from Components.PostsGrid import PostsGrid
 
 
 def get_images() -> dict:
@@ -26,17 +27,15 @@ response = get_images()['data']
 
 
 def Profile(page: Page):
-    def map_f(pic):
-        return {
+    data = [
+        {
             'picture': pic['download_url'],
             'username': "Highlights"
         }
+        for pic in response
+    ]
 
-    data = list(map(map_f, response))
-
-    title_username = WindowDragArea(
-        Text(value="huseyinaverbek", size=20, weight="w500")
-    )
+    title_username = Text(value="huseyinaverbek", size=20, weight="w500")
 
     pp = CircleAvatar(
         foreground_image_url=pp_url,
@@ -107,23 +106,7 @@ def Profile(page: Page):
 
     stories = Stories(page, data)
 
-    images = GridView(
-        expand=1,
-        runs_count=5,
-        max_extent=150,
-        child_aspect_ratio=1.0,
-        spacing=5,
-        run_spacing=5,
-    )
-
-    for i in range(0, 60):
-        images.controls.append(
-            Image(
-                src=f"https://picsum.photos/150/150?{i}",
-                fit="none",
-                repeat="noRepeat",
-            )
-        )
+    images = PostsGrid(page, 3)
     page.update()
 
     profile = Column(
