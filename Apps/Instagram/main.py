@@ -58,7 +58,7 @@ def main(page: Page):
         view = View()
 
         if page.route == "/":
-            mainStack.route = "/explore"
+            mainStack.route = "/"
             mainStack.controls[0].content.controls[0] = homepage
         elif page.route == "/explore":
             mainStack.route = "/explore"
